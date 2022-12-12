@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components'
 
 const GlobalStyle = createGlobalStyle`
 
@@ -60,6 +60,13 @@ body {
   font-family: 'Roboto', sans-serif;
   color: #293845;
 }
-`;
+page-title {
+	font-size: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 110px;
+	}
+`
 
-export default GlobalStyle;
+export default GlobalStyle
