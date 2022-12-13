@@ -6,41 +6,40 @@ export default function Success() {
   console.log(location.state)
 
   return (
-    <Cont>
+    <>
       <PageTitle>Pedido feito com sucesso!</PageTitle>
       <Container>
-        <h3>Filme e Sessão</h3>
-        <p>{location.state.showtime.movie.title}</p>
-        <span>{location.state.showtime.day.date}</span>
-        <span>{location.state.showtime.name}</span>
-      </Container>
-      <Container>
-        <h3>Ingressos</h3>
-        {location.state.seatsId.map(value => (
-          <p>Assento: {value}</p>
-        ))}
-      </Container>
-      <Container>
-        <h3>Comprador</h3>
-        <p>Nome: {location.state.form.name}</p>
-        <p>CPF:{location.state.form.cpf}</p>
+        <Box>
+          <h3>Filme e Sessão</h3>
+          <p>{location.state.showtime.movie.title}</p>
+          <span>{location.state.showtime.day.date}</span>
+          <span>{location.state.showtime.name}</span>
+        </Box>
+        <Box>
+          <h3>Ingressos</h3>
+          {location.state.seatsId.map(value => (
+            <p>Assento: {value}</p>
+          ))}
+        </Box>
+        <Box>
+          <h3>Comprador</h3>
+          <p>Nome: {location.state.form.name}</p>
+          <p>CPF:{location.state.form.cpf}</p>
+        </Box>
       </Container>
 
       <Link to={`/`}>
         <BackHome>Voltar pra home</BackHome>
       </Link>
-    </Cont>
+    </>
   )
 }
 
-const Cont = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
+const Container = styled.div`
+  margin-left: 30px;
 `
 
-const Container = styled.div`
+const Box = styled.div`
   margin-bottom: 50px;
   display: block;
   color: #293845;
@@ -72,12 +71,13 @@ const BackHome = styled.button`
   font-size: 18px;
   border: none;
   border-radius: 3px;
-  margin: 0 auto;
+  margin: 120px auto 200px auto;
 `
 
-const PageTitle = styled.h1`
-  margin-top: 30px;
+const PageTitle = styled.div`
+  margin-top: 120px;
   font-size: 27px;
   color: #247a6b;
   height: 110px;
+  text-align: center;
 `

@@ -8,16 +8,36 @@ import '../../styles/style.css'
 function Seat({ seat, selectSeat }) {
   return (
     <>
+      {/* <StyledSeat
+        assentoDisponivel={seat.isAvailable}
+        assentoSelecionado={seat.id}
+        onClick={
+          seat.isAvailable
+            ? () => selectSeat(seat.id)
+            : () => assentoIndisponivel()
+        }
+      >
+        {seat.name}
+      </StyledSeat>
+      */}
       <span
         className={`seat ${seat.isAvailable ? '' : 'unavailable'} ${
           seat.selected ? 'selected' : ''
         }`}
-        onClick={() => selectSeat(seat.id)}
+        onClick={
+          seat.isAvailable
+            ? () => selectSeat(seat.id)
+            : () => assentoIndisponivel()
+        }
       >
         {seat.name}
       </span>
     </>
   )
+}
+
+function assentoIndisponivel() {
+  alert('Assento indisponível')
 }
 
 export default function Seats() {
@@ -35,7 +55,7 @@ export default function Seats() {
     })
   }
 
-  function handleSeats(value) {
+  /*function handleSeats(value) {
     if (value.isAvailable === false) {
       alert('Esse assento não está disponível')
     } else {
@@ -47,7 +67,7 @@ export default function Seats() {
         setSeats([...seats, value])
       }
     }
-  }
+  }*/
   function sendForm() {
     console.log(form)
     const seatsId = seats.filter(value => value.selected).map(value => value.id)
@@ -70,6 +90,7 @@ export default function Seats() {
   }
 
   function selectSeat(seatId) {
+    console.log(seatId)
     const newSeats = seats.map(value => {
       if (value.id === seatId && value.isAvailable) {
         return {
@@ -96,19 +117,19 @@ export default function Seats() {
   return (
     <>
       <PageTitle>Selecione os assentos</PageTitle>
-      <div className="seat-list">
+      <SeatList>
         {seats.length !== 0
           ? seats.map(value => (
               <Seat
                 key={value.id}
                 seat={value}
                 selectSeat={selectSeat}
-                handleSeats={handleSeats}
-                isSelected={seats.some(s => value.id === s.id)}
+                /* handleSeats={handleSeats}
+                isSelected={seats.some(s => value.id === s.id)}*/
               />
             ))
           : 'carregando...'}
-      </div>
+      </SeatList>
       <Form>
         <InputGroup>
           <Title>Nome</Title>
@@ -170,8 +191,33 @@ const SeatList = styled.div`
 const StyledSeat = styled.div`
   width: 22px;
   height: 22px;
-  border: 1px solid #808f9d;
-  background-color: #c3cfd9;
+  border: 1px solid
+    ${props => {
+      if (props.assentoDisponivel) {
+        return '#808f9d'
+      }
+      if (props.assentoDisponivel === false) {
+        return '#f7c52b'
+      }
+      if (props.assentoDisponivel && props.assentoSelecionado) {
+        return '#8dd7cf'
+      } else {
+        return '#808f9d'
+      }
+    }};
+  background-color: ${props => {
+    if (props.assentoDisponivel) {
+      return '#c3cfd9'
+    }
+    if (props.assentoDisponivel === false) {
+      return '#f7c52b'
+    }
+    if (props.selectSeat) {
+      return '#8dd7cf'
+    } else {
+      return '#c3cfd9'
+    }
+  }};
   border-radius: 50%;
   color: #000000;
   display: flex;
@@ -180,6 +226,9 @@ const StyledSeat = styled.div`
   font-size: 11px;
   margin-bottom: 18px;
   cursor: pointer;
+  :not(:nth-child(10n)) {
+    margin-right: 5px;
+  }
 `
 const Form = styled.div`
   margin-top: 31px;
