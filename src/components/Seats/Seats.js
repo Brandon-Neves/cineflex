@@ -76,17 +76,16 @@ export default function Seats() {
       ...form
     }
 
-    navigate('/sucesso', {
-      state: {
-        showtime,
-        form,
-        seatsId
-      }
+    postBooking(body).then(res => {
+      console.log(res.data)
+      navigate('/sucesso', {
+        state: {
+          showtime,
+          form,
+          seatsId
+        }
+      })
     })
-    // postBooking(body).then((res) => {
-    //   console.log(res.data);
-    //   navigate('/sucesso');
-    // });
   }
 
   function selectSeat(seatId) {
